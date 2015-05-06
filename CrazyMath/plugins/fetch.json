@@ -30,5 +30,17 @@
             "url": "https://github.com/gitawego/cordova-screenshot.git",
             "subdir": "."
         }
+    },
+    "com.google.cordova.admob": {
+        "source": {
+            "type": "registry",
+            "id": "com.google.cordova.admob"
+        }
+    },
+    "com.rjfun.cordova.extension": {
+        "source": {
+            "type": "registry",
+            "id": "com.rjfun.cordova.extension"
+        }
     }
 }

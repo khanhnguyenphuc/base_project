@@ -15,6 +15,10 @@
                         {
                             "xml": "<meta-data android:name=\"com.google.android.gms.games.APP_ID\" android:value=\"@string/app_id\" />",
                             "count": 1
+                        },
+                        {
+                            "xml": "<activity android:configChanges=\"keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize\" android:name=\"com.google.android.gms.ads.AdActivity\" android:theme=\"@android:style/Theme.Translucent\" />",
+                            "count": 1
                         }
                     ],
                     "/manifest": [
@@ -31,6 +35,14 @@
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
                             "count": 2
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
                         }
                     ]
                 }
@@ -48,6 +60,10 @@
                         },
                         {
                             "xml": "<feature name=\"Screenshot\"><param name=\"android-package\" value=\"com.darktalker.cordova.screenshot.Screenshot\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"AdMob\"><param name=\"android-package\" value=\"com.rjfun.cordova.admob.AdMobPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -75,6 +91,9 @@
         },
         "com.darktalker.cordova.screenshot": {
             "PACKAGE_NAME": "puka.crazymath"
+        },
+        "com.google.cordova.admob": {
+            "PACKAGE_NAME": "puka.crazymath"
         }
     },
     "dependent_plugins": {
@@ -82,6 +101,9 @@
             "PACKAGE_NAME": "puka.crazymath"
         },
         "android.support.v4": {
+            "PACKAGE_NAME": "puka.crazymath"
+        },
+        "com.rjfun.cordova.extension": {
             "PACKAGE_NAME": "puka.crazymath"
         }
     }

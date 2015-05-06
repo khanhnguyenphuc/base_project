@@ -20,6 +20,13 @@ module.exports = [
         "merges": [
             "navigator.screenshot"
         ]
+    },
+    {
+        "file": "plugins/com.google.cordova.admob/www/AdMob.js",
+        "id": "com.google.cordova.admob.AdMob",
+        "clobbers": [
+            "window.AdMob"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -28,8 +35,10 @@ module.exports.metadata =
     "com.a42.cordova.googleplaygame": "2.0.4",
     "nl.x-services.plugins.socialsharing": "4.3.18",
     "com.darktalker.cordova.screenshot": "0.1.1",
+    "com.google.cordova.admob": "2.7.5",
     "com.google.playservices": "21.0.0",
-    "android.support.v4": "21.0.1"
+    "android.support.v4": "21.0.1",
+    "com.rjfun.cordova.extension": "1.0.6"
 }
 // BOTTOM OF METADATA
 });

@@ -1,6 +1,7 @@
 var realResult = 0, fakeResult = 0;
 var arrOperator = ['<i class="fa fa-plus fa-4x"></i>', '<i class="fa fa-minus fa-4x"></i>', '<i class="fa fa-times fa-4x"></i>', '/'];
-var arrAchivement = ['CggI3OKY2h8QAhAB','CggI3OKY2h8QAhAD','CggI3OKY2h8QAhAE','CggI3OKY2h8QAhAF','CggI3OKY2h8QAhAG'];
+var arrAchivement = ['CgkI-43u0ukaEAIQAQ','CgkI-43u0ukaEAIQAg', 'CgkI-43u0ukaEAIQBQ', 'CgkI-43u0ukaEAIQBg', 'CgkI-43u0ukaEAIQBw'];
+var leaderboardId = 'CgkI-43u0ukaEAIQAw';
 var score = 0;
 var timeout, timing = 1000;
 var numberRand1 = 10, numberRand2 = 10, operatorLvl = 2;
@@ -102,6 +103,7 @@ var mymath = {
         self.timingGame();
     },
     endGame: function() {
+        if(AdMob) AdMob.showInterstitial();
         submitAchivement();
         if (score < 30)
             self.playSound('media/gameover.mp3');
@@ -147,17 +149,10 @@ var mymath = {
 };
 var successfullyLoggedIn = function () {
     googleplaygame.showPlayer(function (_playerData) {
-        document.querySelector("#image").src = _playerData.iconImageUrl;
-        document.querySelector("#image").style.visibility = 'visible';
-        document.querySelector("#feedback").innerHTML = "Hi, " + _playerData.displayName;
-        playerData = _playerData;
+        console.log(_playerData);
     });
-    $('.btnLogin').hide();
-    $('.btnLogout').show();
-};
-var failedToLogin = function () {
-    console.log('failedToLogin');
-    // googleplaygame.signOut();
+    // $('.btnLogin').hide();
+    // $('.btnLogout').show();
 };
 
 var doLoginGPlus = function() {
@@ -170,23 +165,37 @@ var doLoginGPlus = function() {
     });
 };
 var submitScore = function() {
-    googleplaygame.auth(function () {
+    var doSubmit = function() {
         var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
         var data = {
             score: highScore,
-            leaderboardId: 'CggI3OKY2h8QAhAC'
+            leaderboardId: leaderboardId
         };
         googleplaygame.submitScore(data);
-    }, failedToLogin);
+    };
+    googleplaygame.isSignedIn(function (result) {
+        if (result.isSignedIn) {
+            doSubmit();
+        } else {
+            googleplaygame.auth(doSubmit);
+        }
+    });
 };
 var submitAchivement = function() {
     var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
     var num = Math.floor(highScore / 20);
     var data = {};
+    if (highScore >=10) {
+        data = {
+            achievementId: arrAchivement[0],
+            numSteps: highScore
+        };
+        googleplaygame.incrementAchievement(data);
+    }
     if (num > 0) {
         for (var i = 0; i < num; i++) {
             data = {
-                achievementId: arrAchivement[i],
+                achievementId: arrAchivement[i+1],
                 numSteps: highScore
             };
             googleplaygame.incrementAchievement(data);
@@ -202,6 +211,7 @@ $(function () {
         $('.home').hide();
         $('.my-math').show();
         $('.result-game').hide();
+        if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
     });
     $('.back-menu').click(function(e) {
         $('.home').show();
@@ -215,7 +225,7 @@ $(function () {
     });
     $('.leaderboard-game').click(function(e) {
         googleplaygame.showLeaderboard({
-            leaderboardId: 'CggI3OKY2h8QAhAC'
+            leaderboardId: leaderboardId
         });
     });
     $('.achievement-game').click(function(e) {
