@@ -34,7 +34,7 @@
                     "/*": [
                         {
                             "xml": "<uses-permission android:name=\"android.permission.WRITE_EXTERNAL_STORAGE\" />",
-                            "count": 2
+                            "count": 4
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.INTERNET\" />",
@@ -42,6 +42,18 @@
                         },
                         {
                             "xml": "<uses-permission android:name=\"android.permission.ACCESS_NETWORK_STATE\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.RECORD_AUDIO\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.MODIFY_AUDIO_SETTINGS\" />",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<uses-permission android:name=\"android.permission.READ_PHONE_STATE\" />",
                             "count": 1
                         }
                     ]
@@ -64,6 +76,14 @@
                         },
                         {
                             "xml": "<feature name=\"AdMob\"><param name=\"android-package\" value=\"com.rjfun.cordova.admob.AdMobPlugin\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"File\"><param name=\"android-package\" value=\"org.apache.cordova.file.FileUtils\" /><param name=\"onload\" value=\"true\" /></feature>",
+                            "count": 1
+                        },
+                        {
+                            "xml": "<feature name=\"Media\"><param name=\"android-package\" value=\"org.apache.cordova.media.AudioHandler\" /></feature>",
                             "count": 1
                         }
                     ]
@@ -94,6 +114,9 @@
         },
         "com.google.cordova.admob": {
             "PACKAGE_NAME": "puka.crazymath"
+        },
+        "org.apache.cordova.media": {
+            "PACKAGE_NAME": "puka.crazymath"
         }
     },
     "dependent_plugins": {
@@ -104,6 +127,9 @@
             "PACKAGE_NAME": "puka.crazymath"
         },
         "com.rjfun.cordova.extension": {
+            "PACKAGE_NAME": "puka.crazymath"
+        },
+        "org.apache.cordova.file": {
             "PACKAGE_NAME": "puka.crazymath"
         }
     }

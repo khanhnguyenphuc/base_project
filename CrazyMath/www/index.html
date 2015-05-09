@@ -31,7 +31,6 @@
 		<link rel="stylesheet" href="lib/bootstrap/css/bootstrap-theme.min.css">
 
         <link rel="stylesheet" href="lib/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" type="text/css" href="css/index.css" />
         <link rel="stylesheet" type="text/css" href="css/myStyle.css" />
 
         <script type="text/javascript" src="cordova.js"></script>
@@ -40,108 +39,67 @@
 		<!-- Latest compiled and minified JavaScript -->
 		<script type="text/javascript" src="lib/bootstrap/js/bootstrap.min.js"></script>
         <script type="text/javascript" src="lib/progressbar/progressbar.min.js"></script>
-        <script type="text/javascript" src="js/admob.js"></script>
+        <script type="text/javascript" src="lib/circletype/js/vendor/modernizr-2.6.2-respond-1.1.0.min.js"></script>
+        <script type="text/javascript" src="lib/circletype/js/plugins.js"></script>
+        <script type="text/javascript" src="lib/circletype/js/circletype.min.js"></script>
         <script type="text/javascript" src="js/math.js"></script>
+        <script type="text/javascript" src="js/admob.js"></script>
         <script type="text/javascript" src="js/capture.js"></script>
+        <script type="text/javascript" src="js/main.js"></script>
         <title>Crazy Math</title>
     </head>
     <body onload="onLoad()">
     	<div class="home text-center container">
-    		<h1 class="text-info">Crazy Math</h1>
-
+    		<h1 class="text-info title">Crazy Math</h1>
     		<div class="logo"><img src="img/crazy-logo.png"></div>
-    		<div class="play-game"><button class="btn btn-success start-game"><i class="fa fa-play fa-4x"></i></button></div>
     		<div class="navigation">
-                <div class="row">
-                    <button class="btn btn-info achievement-game"><i class="fa fa-trophy fa-2x"></i></button>
-                    <button class="btn btn-info leaderboard-game"><i class="fa fa-area-chart fa-2x"></i></button>
+                <div class="play-game row">
+                    <button class="btn btn-default start-game"><i class="fa fa-play fa-4x text-success"></i></button>
                 </div>
                 <div class="row">
-                    <button class="btn btn-info rate-game"><a href="https://play.google.com/store/apps/details?id=puka.crazymath"><i class="fa fa-star fa-2x"></i></a></button>
+                    <button class="btn btn-default achievement-game"><i class="fa fa-trophy fa-2x text-info"></i></button>
+                    <button class="btn btn-default leaderboard-game"><i class="fa fa-area-chart fa-2x text-info"></i></button>
+                </div>
+                <div class="row">
+                    <button class="btn btn-default rate-game"><a href="https://play.google.com/store/apps/details?id=puka.crazymath"><i class="fa fa-star fa-2x text-info"></i></a></button>
                 </div>
             </div>
     	</div>
         <div class="my-math text-center" style="display: none;">
-            <div id="my-progress-bar"></div>
+            <div id="crazy-progress-bar" class="container"></div>
+            <div class="container score">0</div>
             <div class="calc container">
-	            <label class="number1 lblNumber">1</label>
-	            <label class="operator1">+</label>
-	            <label class="number2 lblNumber">1</label>
+	            <span class="number1 lblNumber">1</span>
+	            <span class="operator1">+</span>
+	            <span class="number2 lblNumber">1</span>
             </div>
             <div class="result container">
-	            <label class="operator2 lblNumber">=</label>
-	            <label class="number3 lblNumber">2</label>
+	            <span class="operator2 lblNumber">=</span>
+	            <span class="number3 lblNumber">2</span>
             </div>
             <div class="conf">
-                <button class="accept btn btn-success"><i class="fa fa-check fa-5x"></i></button>
-                <button class="deny btn btn-danger"><i class="fa fa-close fa-5x"></i></button>
+                <button class="accept btn btn-default"><i class="fa fa-check fa-5x text-success"></i></button>
+                <button class="deny btn btn-default"><i class="fa fa-close fa-5x text-danger"></i></button>
             </div>
         </div>
         <div class="result-game text-center container" style="display: none;">
         	<div class="show-score">
-	        	<h1 class="score-title">Game Over</h1>
-	        	<p>New <span class="score"></span></p>
-	        	<p>Best <span class="highScore"></span></p>
+	        	<p class="score-title">Game Over</p>
+	        	<p>New <span class="new-score"></span></p>
+	        	<p>Best <span class="high-score"></span></p>
         	</div>
         	<div class="navigation">
                 <div class="row">
-                    <button class="btn btn-info back-menu"><i class="fa fa-home fa-4x"></i></button>
-                    <button class="btn btn-success start-game"><i class="fa fa-play fa-4x"></i></button>
+                    <button class="btn btn-default start-game"><i class="fa fa-play fa-3x text-success"></i></button>
                 </div>
                 <div class="row">
-                    <button class="btn btn-info share-game" onclick="sharePhoto();"><i class="fa fa-share-alt-square fa-4x"></i></button>
+                    <button class="btn btn-default back-menu"><i class="fa fa-home fa-3x text-info"></i></button>
+                    <button class="btn btn-default share-game" onclick="sharePhoto();"><i class="fa fa-share-alt-square fa-3x text-info"></i></button>
                 </div>
                 
         	</div>
         </div>
         <div class="footer container text-center text-info">@CrazyMath by Phuc Khanh</div> 
-        <!-- test admob -->
-        <!-- <div id="fullpage">
-        <p>Demo for AdMob Plugin</p>
-        Banner<br /> Standard: <select id="adSize">
-            <option value='SMART_BANNER'>SMART_BANNER</option>
-            <option value='BANNER'>BANNER</option>
-            <option value='MEDIUM_RECTANGLE'>MEDIUM_RECTANGLE</option>
-            <option value='FULL_BANNER'>FULL_BANNER</option>
-            <option value='LEADERBOARD'>LEADERBOARD</option>
-            <option value='SKYSCRAPER'>SKYSCRAPER</option>
-        </select><br /> <input type='checkbox' id='overlap' />overlap<br/>
-         <input type='checkbox' id='offsetTopBar' />offsetTopBar<br/>
-        <button onclick="createSelectedBanner();">create</button>
-        <br /> Custom Size: (<input id='w' type='text' size=3 /> x <input
-            id='h' type='text' size=3>)
-        <button onclick="createBannerOfGivenSize();">create</button>
-        <br />
-
-        <button onclick="AdMob.removeBanner();">remove banner</button>
-
-        <hr />
-        <select id="adPosition">
-            <option value='1'>Top Left</option>
-            <option value='2'>Top Center</option>
-            <option value='3'>Top Right</option>
-            <option value='4'>Left</option>
-            <option value='5'>Center</option>
-            <option value='6'>Right</option>
-            <option value='7'>Bottom Left</option>
-            <option value='8' selected>Bottom Center</option>
-            <option value='9'>Bottom Right</option>
-        </select>
-        <button onclick="showBannerAtSelectedPosition();">show</button>
-        <br /> (<input id='x' type='text' size=3 />,<input id='y'
-            type='text' size=3>)
-        <button onclick="showBannerAtGivenXY();">show At XY</button>
-        <br />
-
-        <button onclick="AdMob.hideBanner();">hide banner</button>
-        <hr />
-
-        <p>Interstitial</p>
-        <input type='checkbox' id='autoshow' checked />auto show when ready<br />
-        <button onclick="prepareInterstitial();">Prepare</button>
-        <button onclick="AdMob.showInterstitial();">Show</button>
-        <div id='sizeinfo'></div>
-    </div> -->
     </body>
 
 </html>

@@ -42,5 +42,17 @@
             "type": "registry",
             "id": "com.rjfun.cordova.extension"
         }
+    },
+    "org.apache.cordova.media": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.media"
+        }
+    },
+    "org.apache.cordova.file": {
+        "source": {
+            "type": "registry",
+            "id": "org.apache.cordova.file"
+        }
     }
 }
