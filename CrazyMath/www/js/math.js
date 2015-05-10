@@ -2,7 +2,7 @@ var realResult = 0, fakeResult = 0;
 var arrOperator = ['+', '-', 'x', '÷'];
 var arrAchivement = ['CgkI-43u0ukaEAIQAQ','CgkI-43u0ukaEAIQAg', 'CgkI-43u0ukaEAIQBQ', 'CgkI-43u0ukaEAIQBg', 'CgkI-43u0ukaEAIQBw'];
 var leaderboardId = 'CgkI-43u0ukaEAIQAw';
-var arrBackgroundClr = ['#E41A1A', '#E4851A', '#E4D21A', '#A2E41A', '#1AE41D', '#1AE490', '#1AE4E4', '#E41A50'];
+var arrBackgroundClr = ['lightblue', 'lightcoral', 'lightgray', 'lightgreen', 'lightgrey', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lime', 'limegreen'];
 var score = 0;
 var timeout = null, timing = 1000, timingDefault = 1000;
 var numberRand1 = 10, numberRand2 = 10, operatorLvl = 4;
@@ -73,10 +73,11 @@ var mymath = {
         return result;
     },
     confirmCalculator: function(answer) {
+
         if (answer == (realResult == fakeResult)) {
             self.nextGame();
         } else {
-            self.endGame();
+            self.endGame(2);
         }
     },
     timingGame: function() {
@@ -101,8 +102,7 @@ var mymath = {
         self.timingGame();
     },
     endGame: function(type) {
-        // if(AdMob) AdMob.showInterstitial();
-        // submitAchivement();
+        submitAchivement();
         if (score < 30)
             self.playSound('gameover','media/gameover.mp3');
         else if (score < 50)
@@ -112,7 +112,7 @@ var mymath = {
         var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
         if (highScore < score) {
             highScore = score;
-            // submitScore();
+            submitScore();
         }
         $('.my-math .answer').hide();
         $('.new-score').text(score);
@@ -161,20 +161,8 @@ function getURL(s) {
     return s;
 }
 
-// onSuccess Callback
-//
-function onSuccess() {
-    console.log("playAudio():Audio Success");
-}
-
-// onError Callback 
-//
-function onError(error) {
-    alert('code: '    + error.code    + '\n' + 
-          'message: ' + error.message + '\n');
-}
 var successfullyLoggedIn = function (cb) {
-    //
+    //successfullyLoggedIn
     if (cb) cb();
 };
 var failedLoggedIn = function() {
@@ -223,6 +211,8 @@ var submitAchivement = function() {
 };
 
 var loadBackground = function() {
-    var index = Math.floor((Math.random() * (arrBackgroundClr.length - 1)));
+    var index = Math.floor((Math.random() * arrBackgroundClr.length));
+    console.log(index);
+    console.log(arrBackgroundClr[index]);
     $('body').css('background', arrBackgroundClr[index]);
 };

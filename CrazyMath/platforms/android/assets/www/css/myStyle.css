@@ -50,7 +50,6 @@ body {
 	position: absolute;
 	top: 0px;
 	width: 100%;
-	height: 100%;
 }
 .result-game .show-score {
 	background: rgb(90, 94, 90);
@@ -69,7 +68,9 @@ body {
   	width: 50px;
   	height: 50px;
 }
-
+.result-game .score-feedback {
+	color: lightgreen;
+}
 #crazy-progress-bar {
 	  position: absolute;
 	  top: 10px;
@@ -84,6 +85,81 @@ body {
 .navigation .start-game{
 	width: 60%;
 }
-/*.navigation .back-menu, .navigation .share-game, .navigation .achievement-game, .navigation .leaderboard-game{
-	width: 25%;
-}*/
+@media (max-width: 320px) {
+	.result-game .show-score {
+		background: rgb(90, 94, 90);
+		border-radius: 10px;
+		padding: 5px 0;
+		margin-bottom: 0;
+		font-size: 1.5em;
+	}
+	.result-game .score-title, .result-game .new-score, .result-game .high-score {
+	  	font-size: 2em;
+	}
+	.result-game .score-title {
+		color: hsl(50, 100%, 70%);
+	}
+	.result-game .score-icon img {
+	  	width: 30px;
+	  	height: 30px;
+	}
+	.navigation .btn {
+		margin: 15px 10px 0 10px;
+	}
+}
+@media (max-width: 240px){
+	.answer {
+		width: 100%;
+		position: absolute;
+		bottom: 40px;
+	}
+	.footer {
+		width: 100%;
+		position: absolute;
+		bottom: 10px;
+		font-size: 1em;
+	}
+	.my-math .score, .my-math .calc, .my-math .result{
+		font-size: 3em;
+		font-weight: bold;
+	}
+	.my-math .accept {
+		margin-right: 1em;
+	}
+	.home .title {
+		font-size: 2em;
+	}
+	.home .logo img {
+		margin-top: -2em;
+	}
+	.home .logo img {
+		width: 30px;
+		height: 30px;
+	}
+	.result-game .show-score {
+		background: rgb(90, 94, 90);
+		border-radius: 10px;
+		padding: 5px 0;
+		margin-bottom: 10px;
+		font-size: 1em;
+	}
+	.result-game .score-title, .result-game .new-score, .result-game .high-score {
+	  	font-size: 1em;
+	}
+	.result-game .score-title {
+		color: hsl(50, 100%, 70%);
+	}
+	.result-game .score-icon img {
+	  	width: 30px;
+	  	height: 30px;
+	}
+
+	#crazy-progress-bar {
+		  position: absolute;
+		  top: 10px;
+		  height: 10px;
+	}
+	.navigation .btn {
+		margin: 15px 10px 0 10px;
+	}
+}
