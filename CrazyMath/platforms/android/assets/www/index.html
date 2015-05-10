@@ -51,17 +51,28 @@
     <body onload="onLoad()">
     	<div class="home text-center container">
     		<h1 class="text-info title">Crazy Math</h1>
+
     		<div class="logo"><img src="img/crazy-logo.png"></div>
     		<div class="navigation">
                 <div class="play-game row">
-                    <button class="btn btn-default start-game"><i class="fa fa-play fa-4x text-success"></i></button>
+                <button class="btn btn-default start-game"><i class="fa fa-play fa-4x text-success"></i></button>
+                    <!-- <div class="col-xs-1 col-sm-1"></div>
+                    <div class="col-xs-9 col-sm-9"><button class="btn btn-default start-game"><i class="fa fa-play fa-4x text-success"></i></button></div>
+                    <div class="col-xs-1 col-sm-1"></div> -->
+                    
                 </div>
                 <div class="row">
-                    <button class="btn btn-default achievement-game"><i class="fa fa-trophy fa-2x text-info"></i></button>
-                    <button class="btn btn-default leaderboard-game"><i class="fa fa-area-chart fa-2x text-info"></i></button>
+                <button class="btn btn-default achievement-game"><i class="fa fa-trophy fa-2x text-info"></i></button>
+                <button class="btn btn-default leaderboard-game"><i class="fa fa-area-chart fa-2x text-info"></i></button>
+                    <!-- <div class="col-xs-4 col-xs-offset-1">
+                    <button class="btn btn-default achievement-game"><i class="fa fa-trophy fa-2x text-info"></i></button></div>
+                    <div class="col-xs-4 col-xs-offset-1"><button class="btn btn-default leaderboard-game"><i class="fa fa-area-chart fa-2x text-info"></i></button></div> -->
+                    
                 </div>
                 <div class="row">
-                    <button class="btn btn-default rate-game"><a href="https://play.google.com/store/apps/details?id=puka.crazymath"><i class="fa fa-star fa-2x text-info"></i></a></button>
+                <button class="btn btn-default rate-game"><a href="https://play.google.com/store/apps/details?id=puka.crazymath"><i class="fa fa-star fa-2x text-info"></i></a></button>
+                    <!-- <div class="col-xs-7 col-xs-offset-2"><button class="btn btn-default rate-game"><a href="https://play.google.com/store/apps/details?id=puka.crazymath"><i class="fa fa-star fa-2x text-info"></i></a></button></div> -->
+                    
                 </div>
             </div>
     	</div>
@@ -77,24 +88,34 @@
 	            <span class="operator2 lblNumber">=</span>
 	            <span class="number3 lblNumber">2</span>
             </div>
-            <div class="conf">
-                <button class="accept btn btn-default"><i class="fa fa-check fa-5x text-success"></i></button>
-                <button class="deny btn btn-default"><i class="fa fa-close fa-5x text-danger"></i></button>
+            <div class="answer">
+            <div class="col-xs-6 col-sm-6 text-right"><button class="accept btn btn-default"><i class="fa fa-check fa-5x text-success"></i></button></div>
+            <div class="col-xs-6 col-sm-6 text-left"><button class="deny btn btn-default"><i class="fa fa-close fa-5x text-danger"></i></button></div>
             </div>
         </div>
         <div class="result-game text-center container" style="display: none;">
         	<div class="show-score">
-	        	<p class="score-title">Game Over</p>
+                <p class="score-title">Game Over</p>
+	        	<p class="score-feedback"></p>
 	        	<p>New <span class="new-score"></span></p>
 	        	<p>Best <span class="high-score"></span></p>
         	</div>
         	<div class="navigation">
                 <div class="row">
+                <button class="btn btn-default start-game"><i class="fa fa-play fa-3x text-success"></i></button>
+                <!-- <div class="col-xs-9 col-xs-offset-1">
                     <button class="btn btn-default start-game"><i class="fa fa-play fa-3x text-success"></i></button>
+                </div> -->
                 </div>
                 <div class="row">
+                <button class="btn btn-default back-menu"><i class="fa fa-home fa-3x text-info"></i></button>
+                <button class="btn btn-default share-game" onclick="sharePhoto();"><i class="fa fa-share-alt-square fa-3x text-info"></i></button>
+                    <!-- <div class="col-xs-4 col-xs-offset-1">
                     <button class="btn btn-default back-menu"><i class="fa fa-home fa-3x text-info"></i></button>
+                    </div>
+                    <div class="col-xs-4 col-xs-offset-1">
                     <button class="btn btn-default share-game" onclick="sharePhoto();"><i class="fa fa-share-alt-square fa-3x text-info"></i></button>
+                    </div> -->
                 </div>
                 
         	</div>

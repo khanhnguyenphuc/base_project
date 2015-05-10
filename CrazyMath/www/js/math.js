@@ -82,7 +82,7 @@ var mymath = {
     timingGame: function() {
         timing = timingDefault + remainTime;
         timeout = setTimeout(function() {
-            self.endGame();
+            self.endGame(1);
         }, timing);
     },
     nextGame: function() {
@@ -100,7 +100,7 @@ var mymath = {
         if (timeout != null) clearTimeout(timeout);
         self.timingGame();
     },
-    endGame: function() {
+    endGame: function(type) {
         // if(AdMob) AdMob.showInterstitial();
         // submitAchivement();
         if (score < 30)
@@ -114,7 +114,7 @@ var mymath = {
             highScore = score;
             // submitScore();
         }
-        $('.my-math .conf').hide();
+        $('.my-math .answer').hide();
         $('.new-score').text(score);
         $('.high-score').text(highScore);
         $('.result-game').fadeIn('slow', 'swing');
@@ -123,6 +123,11 @@ var mymath = {
         if (typeof(Storage) != "undefined") {
             // Store
             localStorage.setItem("CrazyMath-HighScore", highScore);
+        }
+        if (type == 1) {
+            $('.score-feedback').text('Too late!');
+        } else if (type == 2) {
+            $('.score-feedback').text('Answer is incorrect!');
         }
         //reset
         clearTimeout(timeout);

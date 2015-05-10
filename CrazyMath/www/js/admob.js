@@ -16,12 +16,7 @@
 			interstitial: 'ca-app-pub-7929022213809701/5509193677'
 		};
 	}
-        
-    function initApp() {
-		initAd();
-        doLoginGPlus();
-        createBanner();
-    }
+    
     function initAd(){
         var defaultOptions = {
             // bannerId: admobid.banner,
@@ -38,6 +33,7 @@
             // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
         };
         AdMob.setOptions( defaultOptions );
+        if(AdMob) AdMob.showInterstitial();
         registerAdEvents();
     }
     // optional, in case respond to events or handle error

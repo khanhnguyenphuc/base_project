@@ -16,7 +16,7 @@ body {
 .my-math, .home, .result-game {
   	margin-top: 20px;
 }
-.conf {
+.answer {
 	width: 100%;
 	position: absolute;
 	bottom: 50px;
@@ -27,7 +27,7 @@ body {
 	bottom: 10px;
 	font-size: 1.5em;
 }
-.my-math div:not(#crazy-progress-bar){
+.my-math .score, .my-math .calc, .my-math .result{
 	font-size: 6em;
 	font-weight: bold;
 }
@@ -36,6 +36,10 @@ body {
 }
 .my-math .score {
 	color: #1A80E4;
+}
+.accept, .deny {
+	width: 80%;
+	height: 100%;
 }
 .home .title {
 	font-size: 4em;
@@ -59,7 +63,7 @@ body {
   	font-size: 2em;
 }
 .result-game .score-title {
-	color: darkred;
+	color: hsl(50, 100%, 70%);
 }
 .result-game .score-icon img {
   	width: 50px;
@@ -71,16 +75,15 @@ body {
 	  top: 10px;
 	  height: 10px;
 }
-.accept, .deny {
-	width: 150px;
-	height: 150px;
-}
 .navigation .btn {
 	margin: 25px 10px 0 10px;
 }
 .navigation .btn:not(.start-game) {
-	width: 90px;
+	width: 27%;
 }
-.navigation .start-game {
-	width: 200px;
+.navigation .start-game{
+	width: 60%;
 }
+/*.navigation .back-menu, .navigation .share-game, .navigation .achievement-game, .navigation .leaderboard-game{
+	width: 25%;
+}*/

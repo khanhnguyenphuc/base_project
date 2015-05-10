@@ -5,7 +5,7 @@ function onLoad() {
         initApp();
     }
     loadBackground();
-    $('.title').circleType({radius: 400, fluid: true});
+    $('.title').circleType({radius: 400});
 }
 $(function () {
     
@@ -13,7 +13,7 @@ $(function () {
         mymath.initialize();
         $('.home').hide();
         $('.my-math').show();
-        $('.my-math .conf').show();
+        $('.my-math .answer').show();
         $('.result-game').hide();
         $('.my-math .score').text(0);
         loadBackground();
