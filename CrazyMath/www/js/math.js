@@ -103,7 +103,7 @@ var mymath = {
     },
     endGame: function(type) {
         submitAchivement();
-        if (score < 30)
+        if (score < 20)
             self.playSound('gameover','media/gameover.mp3');
         else if (score < 50)
             self.playSound('awesome','media/awesome.mp3');
