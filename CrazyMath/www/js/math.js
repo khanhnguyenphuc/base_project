@@ -1,3 +1,5 @@
+var ET_NOT_CORRECT_ANSWER = 1;
+var ET_TOO_LATE = 2;
 var realResult = 0, fakeResult = 0;
 var arrOperator = ['+', '-', 'x', '÷'];
 var arrAchivement = ['CgkI-43u0ukaEAIQAQ','CgkI-43u0ukaEAIQAg', 'CgkI-43u0ukaEAIQBQ', 'CgkI-43u0ukaEAIQBg', 'CgkI-43u0ukaEAIQBw'];
@@ -8,6 +10,7 @@ var timeout = null, timing = 1000, timingDefault = 1000;
 var numberRand1 = 10, numberRand2 = 10, operatorLvl = 4;
 var startTime, remainTime = 0;
 var lstMedia = {};
+var playerData = {};
 var self;
 var mymath = {
     // Application Constructor
@@ -77,13 +80,13 @@ var mymath = {
         if (answer == (realResult == fakeResult)) {
             self.nextGame();
         } else {
-            self.endGame(2);
+        self.endGame(ET_NOT_CORRECT_ANSWER);
         }
     },
     timingGame: function() {
         timing = timingDefault + remainTime;
         timeout = setTimeout(function() {
-            self.endGame(1);
+            self.endGame(ET_TOO_LATE);
         }, timing);
     },
     nextGame: function() {
@@ -109,7 +112,7 @@ var mymath = {
             self.playSound('awesome','media/awesome.mp3');
         else
             self.playSound('genius','media/genius.mp3');
-        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
+        var highScore = localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) ? localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) : 0;
         if (highScore < score) {
             highScore = score;
             submitScore();
@@ -117,16 +120,19 @@ var mymath = {
         $('.my-math .answer').hide();
         $('.new-score').text(score);
         $('.high-score').text(highScore);
-        $('.result-game').fadeIn('slow', 'swing');
-        $('.score-title').circleType({radius: 400});
+        setTimeout(function() {
+            $('.result-game').fadeIn('slow', 'swing');
+            $('.score-title').circleType({radius: 400});
+        }, 500);
+        
         $('#crazy-progress-bar').html('');
         if (typeof(Storage) != "undefined") {
             // Store
-            localStorage.setItem("CrazyMath-HighScore", highScore);
+            localStorage.setItem("CrazyMath-HighScore-"+playerData.playerId, highScore);
         }
-        if (type == 1) {
+        if (type == ET_TOO_LATE) {
             $('.score-feedback').text('Too late!');
-        } else if (type == 2) {
+        } else if (type == ET_NOT_CORRECT_ANSWER) {
             $('.score-feedback').text('Answer is incorrect!');
         }
         //reset
@@ -163,6 +169,9 @@ function getURL(s) {
 
 var successfullyLoggedIn = function (cb) {
     //successfullyLoggedIn
+    googleplaygame.showPlayer(function (_playerData) {
+        playerData = _playerData;
+    });
     if (cb) cb();
 };
 var failedLoggedIn = function() {
@@ -176,7 +185,7 @@ var doLoginGPlus = function(cb) {
 };
 var submitScore = function() {
     var doSubmit = function() {
-        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
+        var highScore = localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) ? localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) : 0;
         var data = {
             score: highScore,
             leaderboardId: leaderboardId
@@ -187,7 +196,7 @@ var submitScore = function() {
 };
 var submitAchivement = function() {
     var doSubmit = function() {
-        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
+        var highScore = localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) ? localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) : 0;
         var num = Math.floor(highScore / 20);
         var data = {};
         if (highScore >=10) {
@@ -212,7 +221,5 @@ var submitAchivement = function() {
 
 var loadBackground = function() {
     var index = Math.floor((Math.random() * arrBackgroundClr.length));
-    console.log(index);
-    console.log(arrBackgroundClr[index]);
     $('body').css('background', arrBackgroundClr[index]);
 };

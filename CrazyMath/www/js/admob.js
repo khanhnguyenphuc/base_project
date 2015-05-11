@@ -29,11 +29,11 @@
             bgColor: 'black', // color name, or '#RRGGBB'
             // x: integer,		// valid when set position to 0 / POS_XY
             // y: integer,		// valid when set position to 0 / POS_XY
-            isTesting: true, // set to true, to receiving test ad for testing purpose
+            isTesting: false, // set to true, to receiving test ad for testing purpose
             // autoShow: true // auto show interstitial ad when loaded, set to false if prepare/show
         };
         AdMob.setOptions( defaultOptions );
-        if(AdMob) AdMob.showInterstitial();
+        
         registerAdEvents();
     }
     // optional, in case respond to events or handle error
@@ -64,8 +64,10 @@
 var createBanner = function() {
     if (AdMob)
         AdMob.createBanner( {
-        adId: admobid.banner, 
-        position: AdMob.AD_POSITION.BOTTOM_CENTER, 
-        autoShow: true} );
+            adId: admobid.banner, 
+            position: AdMob.AD_POSITION.BOTTOM_CENTER, 
+            autoShow: true,
+            overlap: true
+        } );
 }
     

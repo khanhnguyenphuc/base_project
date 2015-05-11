@@ -19,12 +19,12 @@ body {
 .answer {
 	width: 100%;
 	position: absolute;
-	bottom: 50px;
+	bottom: 75px;
 }
 .footer {
 	width: 100%;
 	position: absolute;
-	bottom: 10px;
+	bottom: 45px;
 	font-size: 1.5em;
 }
 .my-math .score, .my-math .calc, .my-math .result{
@@ -54,8 +54,6 @@ body {
 .result-game .show-score {
 	background: rgb(90, 94, 90);
 	border-radius: 10px;
-	padding: 15px 0;
-	margin-bottom: 15px;
 	font-size: 2em;
 }
 .result-game .score-title, .result-game .new-score, .result-game .high-score {
@@ -70,6 +68,7 @@ body {
 }
 .result-game .score-feedback {
 	color: lightgreen;
+	margin-top: -10px;
 }
 #crazy-progress-bar {
 	  position: absolute;
@@ -87,10 +86,6 @@ body {
 }
 @media (max-width: 320px) {
 	.result-game .show-score {
-		background: rgb(90, 94, 90);
-		border-radius: 10px;
-		padding: 5px 0;
-		margin-bottom: 0;
 		font-size: 1.5em;
 	}
 	.result-game .score-title, .result-game .new-score, .result-game .high-score {
@@ -107,16 +102,41 @@ body {
 		margin: 15px 10px 0 10px;
 	}
 }
-@media (max-width: 240px){
-	.answer {
-		width: 100%;
-		position: absolute;
-		bottom: 40px;
+@media (max-width: 320px) and (max-height: 480px) {
+	.home .title {
+		font-size: 2em;
 	}
+	.my-math {
+		font-size: 2em;
+	}
+	.my-math .score, .my-math .calc, .my-math .result{
+		font-size: 2em;
+		font-weight: bold;
+	}
+	.result-game .show-score {
+		background: rgb(90, 94, 90);
+		border-radius: 10px;
+		font-size: 1.5em;
+	}
+	.result-game .score-title, .result-game .new-score, .result-game .high-score {
+	  	font-size: 2em;
+	}
+	.result-game .score-title {
+		color: hsl(50, 100%, 70%);
+	}
+	.result-game .score-icon img {
+	  	width: 30px;
+	  	height: 30px;
+	}
+	.navigation .btn {
+		margin: 10px 10px 0 10px;
+	}
+}
+@media (max-width: 240px){
 	.footer {
-		width: 100%;
-		position: absolute;
-		bottom: 10px;
+		font-size: 1em;
+	}
+	.my-math {
 		font-size: 1em;
 	}
 	.my-math .score, .my-math .calc, .my-math .result{
@@ -139,8 +159,6 @@ body {
 	.result-game .show-score {
 		background: rgb(90, 94, 90);
 		border-radius: 10px;
-		padding: 5px 0;
-		margin-bottom: 10px;
 		font-size: 1em;
 	}
 	.result-game .score-title, .result-game .new-score, .result-game .high-score {
