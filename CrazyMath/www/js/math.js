@@ -104,18 +104,24 @@ var mymath = {
         self.timingGame();
     },
     endGame: function(type) {
+
+        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
+        if (highScore < score) {
+            highScore = score;
+            submitScore();
+        }
         submitAchivement();
+        if (typeof(Storage) != "undefined") {
+            // Store
+            localStorage.setItem("CrazyMath-HighScore", highScore);
+        }
         if (score < 20)
             self.playSound('gameover','media/gameover.mp3');
         else if (score < 50)
             self.playSound('awesome','media/awesome.mp3');
         else
             self.playSound('genius','media/genius.mp3');
-        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
-        if (highScore < score) {
-            highScore = score;
-            submitScore();
-        }
+        
         $('.my-math .answer').hide();
         $('.new-score').text(score);
         $('.high-score').text(highScore);
@@ -125,10 +131,7 @@ var mymath = {
         }, 500);
         
         $('#crazy-progress-bar').html('');
-        if (typeof(Storage) != "undefined") {
-            // Store
-            localStorage.setItem("CrazyMath-HighScore", highScore);
-        }
+        
         if (type == ET_TOO_LATE) {
             $('.score-feedback').text('Too late!');
         } else if (type == ET_NOT_CORRECT_ANSWER) {
