@@ -19,12 +19,12 @@ body {
 .answer {
 	width: 100%;
 	position: absolute;
-	bottom: 75px;
+	bottom: 40px;
 }
 .footer {
 	width: 100%;
 	position: absolute;
-	bottom: 45px;
+	bottom: 0;
 	font-size: 1.5em;
 }
 .my-math .score, .my-math .calc, .my-math .result{
@@ -74,6 +74,7 @@ body {
 	  position: absolute;
 	  top: 10px;
 	  height: 10px;
+	  width: 100%;
 }
 .navigation .btn {
 	margin: 25px 10px 0 10px;

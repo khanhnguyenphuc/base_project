@@ -1,3 +1,5 @@
+var ET_NOT_CORRECT_ANSWER = 1;
+var ET_TOO_LATE = 2;
 var realResult = 0, fakeResult = 0;
 var arrOperator = ['+', '-', 'x', '÷'];
 var arrAchivement = ['CgkI-43u0ukaEAIQAQ','CgkI-43u0ukaEAIQAg', 'CgkI-43u0ukaEAIQBQ', 'CgkI-43u0ukaEAIQBg', 'CgkI-43u0ukaEAIQBw'];
@@ -14,6 +16,8 @@ var mymath = {
     initialize: function() {
         self = this;
         var d = new Date();
+        startTime = d.getTime();
+
         if (score != 0 && score % 20 == 0) {
             numberRand1 += 5;
             numberRand2 += 5;
@@ -26,8 +30,6 @@ var mymath = {
         var operator = Math.floor((Math.random() * operatorLvl));
         //get result
         self.calculator(number1, number2, operator);
-
-        startTime = d.getTime();
     },
     calculator: function(num1, num2, operator) {
         var result = 0;
@@ -77,13 +79,13 @@ var mymath = {
         if (answer == (realResult == fakeResult)) {
             self.nextGame();
         } else {
-            self.endGame(2);
+            self.endGame(ET_NOT_CORRECT_ANSWER);
         }
     },
     timingGame: function() {
         timing = timingDefault + remainTime;
         timeout = setTimeout(function() {
-            self.endGame(1);
+            self.endGame(ET_TOO_LATE);
         }, timing);
     },
     nextGame: function() {
@@ -103,7 +105,7 @@ var mymath = {
     },
     endGame: function(type) {
         submitAchivement();
-        if (score < 30)
+        if (score < 20)
             self.playSound('gameover','media/gameover.mp3');
         else if (score < 50)
             self.playSound('awesome','media/awesome.mp3');
@@ -117,16 +119,19 @@ var mymath = {
         $('.my-math .answer').hide();
         $('.new-score').text(score);
         $('.high-score').text(highScore);
-        $('.result-game').fadeIn('slow', 'swing');
-        $('.score-title').circleType({radius: 400});
+        setTimeout(function() {
+            $('.result-game').fadeIn('slow', 'swing');
+            $('.score-title').circleType({radius: 400});
+        }, 500);
+        
         $('#crazy-progress-bar').html('');
         if (typeof(Storage) != "undefined") {
             // Store
             localStorage.setItem("CrazyMath-HighScore", highScore);
         }
-        if (type == 1) {
+        if (type == ET_TOO_LATE) {
             $('.score-feedback').text('Too late!');
-        } else if (type == 2) {
+        } else if (type == ET_NOT_CORRECT_ANSWER) {
             $('.score-feedback').text('Answer is incorrect!');
         }
         //reset
@@ -212,7 +217,5 @@ var submitAchivement = function() {
 
 var loadBackground = function() {
     var index = Math.floor((Math.random() * arrBackgroundClr.length));
-    console.log(index);
-    console.log(arrBackgroundClr[index]);
     $('body').css('background', arrBackgroundClr[index]);
 };

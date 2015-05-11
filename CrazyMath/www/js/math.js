@@ -10,13 +10,14 @@ var timeout = null, timing = 1000, timingDefault = 1000;
 var numberRand1 = 10, numberRand2 = 10, operatorLvl = 4;
 var startTime, remainTime = 0;
 var lstMedia = {};
-var playerData = {};
 var self;
 var mymath = {
     // Application Constructor
     initialize: function() {
         self = this;
         var d = new Date();
+        startTime = d.getTime();
+
         if (score != 0 && score % 20 == 0) {
             numberRand1 += 5;
             numberRand2 += 5;
@@ -29,8 +30,6 @@ var mymath = {
         var operator = Math.floor((Math.random() * operatorLvl));
         //get result
         self.calculator(number1, number2, operator);
-
-        startTime = d.getTime();
     },
     calculator: function(num1, num2, operator) {
         var result = 0;
@@ -80,7 +79,7 @@ var mymath = {
         if (answer == (realResult == fakeResult)) {
             self.nextGame();
         } else {
-        self.endGame(ET_NOT_CORRECT_ANSWER);
+            self.endGame(ET_NOT_CORRECT_ANSWER);
         }
     },
     timingGame: function() {
@@ -112,7 +111,7 @@ var mymath = {
             self.playSound('awesome','media/awesome.mp3');
         else
             self.playSound('genius','media/genius.mp3');
-        var highScore = localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) ? localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) : 0;
+        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
         if (highScore < score) {
             highScore = score;
             submitScore();
@@ -128,7 +127,7 @@ var mymath = {
         $('#crazy-progress-bar').html('');
         if (typeof(Storage) != "undefined") {
             // Store
-            localStorage.setItem("CrazyMath-HighScore-"+playerData.playerId, highScore);
+            localStorage.setItem("CrazyMath-HighScore", highScore);
         }
         if (type == ET_TOO_LATE) {
             $('.score-feedback').text('Too late!');
@@ -169,9 +168,6 @@ function getURL(s) {
 
 var successfullyLoggedIn = function (cb) {
     //successfullyLoggedIn
-    googleplaygame.showPlayer(function (_playerData) {
-        playerData = _playerData;
-    });
     if (cb) cb();
 };
 var failedLoggedIn = function() {
@@ -185,7 +181,7 @@ var doLoginGPlus = function(cb) {
 };
 var submitScore = function() {
     var doSubmit = function() {
-        var highScore = localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) ? localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) : 0;
+        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
         var data = {
             score: highScore,
             leaderboardId: leaderboardId
@@ -196,7 +192,7 @@ var submitScore = function() {
 };
 var submitAchivement = function() {
     var doSubmit = function() {
-        var highScore = localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) ? localStorage.getItem("CrazyMath-HighScore-"+playerData.playerId) : 0;
+        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
         var num = Math.floor(highScore / 20);
         var data = {};
         if (highScore >=10) {

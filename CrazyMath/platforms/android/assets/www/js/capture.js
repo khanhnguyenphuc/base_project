@@ -2,7 +2,7 @@ function sharePhoto(cb) {
      var imageLink;
     navigator.screenshot.save(function(error,res){
         if(error){
-            
+            console.log(error);
         }else{
             //For android
             imageLink = res.filePath;

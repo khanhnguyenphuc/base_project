@@ -9,6 +9,9 @@ function onLoad() {
     
 function initApp() {
 
+    doLoginGPlus();
+    initAd();
+    loadBackground();
     //fix html for special device
     if (window.innerWidth < 250) {
         $('.start-game').html('<i class="fa fa-play fa-2x text-success"></i>');
@@ -21,9 +24,6 @@ function initApp() {
         $('.deny').html('<i class="fa fa-close fa-3x text-danger"></i>');
     }
 
-    initAd();
-    doLoginGPlus();
-    loadBackground();
     $('.title').circleType({radius: 400});
     createBanner();
 }

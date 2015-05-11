@@ -21,10 +21,10 @@
         var defaultOptions = {
             // bannerId: admobid.banner,
             // interstitialId: admobid.interstitial,
-            // adSize: 'SMART_BANNER',
+            adSize: 'SMART_BANNER',
             // width: integer, // valid when set adSize 'CUSTOM'
             // height: integer, // valid when set adSize 'CUSTOM'
-            position: AdMob.AD_POSITION.TOP_CENTER,
+            position: AdMob.AD_POSITION.BOTTOM_CENTER,
             // offsetTopBar: false, // avoid overlapped by status bar, for iOS7+
             bgColor: 'black', // color name, or '#RRGGBB'
             // x: integer,		// valid when set position to 0 / POS_XY
@@ -66,8 +66,7 @@ var createBanner = function() {
         AdMob.createBanner( {
             adId: admobid.banner, 
             position: AdMob.AD_POSITION.BOTTOM_CENTER, 
-            autoShow: true,
-            overlap: true
+            autoShow: true
         } );
 }
     
