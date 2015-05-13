@@ -43,6 +43,13 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/org.apache.cordova.inappbrowser/www/inappbrowser.js",
+        "id": "org.apache.cordova.inappbrowser.inappbrowser",
+        "clobbers": [
+            "window.open"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -197,6 +204,7 @@ module.exports.metadata =
     "com.darktalker.cordova.screenshot": "0.1.1",
     "com.google.cordova.admob": "2.7.5",
     "org.apache.cordova.media": "0.2.16",
+    "org.apache.cordova.inappbrowser": "0.6.0",
     "com.google.playservices": "21.0.0",
     "android.support.v4": "21.0.1",
     "com.rjfun.cordova.extension": "1.0.6",

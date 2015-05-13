@@ -1,3 +1,4 @@
+
 function onLoad() {
     if(( /(ipad|iphone|ipod|android|windows phone)/i.test(navigator.userAgent) )) {
         document.addEventListener('deviceready', initApp, false);
@@ -7,8 +8,7 @@ function onLoad() {
     
 }
     
-function initApp() {
-
+var initApp = function() {
     doLoginGPlus();
     initAd();
     loadBackground();
@@ -26,7 +26,8 @@ function initApp() {
 
     $('.title').circleType({radius: 400});
     createBanner();
-}
+    // createInterstitial();
+};
 $(function () {
     
     $('.start-game').click(function(e) {
@@ -67,4 +68,18 @@ $(function () {
         });
         
     });
+
+    $('.rate-game').on('click', function(e) {
+        // Find device platform using the plugin org.apache.cordova.device
+        var devicePlatform = cordova.platformId;
+        // Check which platform
+        if (devicePlatform == "iOS") {
+            // window.open('https://itunes.apple.com/us/app/YOUR-APP-SLUG-HERE/id000000000?mt=8&uo=4'); // or itms://
+        } else if (devicePlatform == "android") {
+            window.open('market://details?id=puka.crazymath', '_system');
+        } else if (devicePlatform == "BlackBerry"){
+            // window.open('http://appworld.blackberry.com/webstore/content/<applicationid>');
+        }
+    });
+    
 });

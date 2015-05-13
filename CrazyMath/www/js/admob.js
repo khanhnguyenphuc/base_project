@@ -51,7 +51,7 @@
         document.addEventListener('onInterstitialLeaveApp', function(){});
         document.addEventListener('onInterstitialDismiss', function(){});
         */
-        
+
         // new events, with variable to differentiate: adNetwork, adType, adEvent
         document.addEventListener('onAdFailLoad', function(data){
             console.log(data);
@@ -68,5 +68,11 @@ var createBanner = function() {
             position: AdMob.AD_POSITION.BOTTOM_CENTER, 
             autoShow: true
         } );
-}
-    
+};
+var createInterstitial = function() {
+    // prepare at beginning of a game level
+    AdMob.prepareInterstitial({
+        adId: admobid.interstitial,
+        autoShow: false
+    });
+};

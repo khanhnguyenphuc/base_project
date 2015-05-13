@@ -4,7 +4,7 @@ var realResult = 0, fakeResult = 0;
 var arrOperator = ['+', '-', 'x', '÷'];
 var arrAchivement = ['CgkI-43u0ukaEAIQAQ','CgkI-43u0ukaEAIQAg', 'CgkI-43u0ukaEAIQBQ', 'CgkI-43u0ukaEAIQBg', 'CgkI-43u0ukaEAIQBw'];
 var leaderboardId = 'CgkI-43u0ukaEAIQAw';
-var arrBackgroundClr = ['lightblue', 'lightcoral', 'lightgray', 'lightgreen', 'lightgrey', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue', 'lime', 'limegreen'];
+var arrBackgroundClr = ['lightblue', 'lightcoral', 'lightgray', 'lightgreen', 'lightgrey', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue'];
 var score = 0;
 var timeout = null, timing = 1000, timingDefault = 1000;
 var numberRand1 = 10, numberRand2 = 10, operatorLvl = 4;
@@ -45,6 +45,7 @@ var mymath = {
                 break;
             case 3:
                 result = num1;
+                num2 = Math.floor((Math.random() * numberRand2)) + 1;
                 num1 = num1 * num2;
                 break;
         }
@@ -174,7 +175,7 @@ var successfullyLoggedIn = function (cb) {
     if (cb) cb();
 };
 var failedLoggedIn = function() {
-    if (AdMob) AdMob.removeBanner();
+    // if (AdMob) AdMob.removeBanner();
 };
 
 var doLoginGPlus = function(cb) {
