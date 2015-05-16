@@ -12,11 +12,11 @@ var actions = ['auth', 'signOut', 'isSignedIn',
 actions.forEach(function (action) {
     GooglePlayGame.prototype[action] = function (data, success, failure) {
         var defaultSuccessCallback = function () {
-                console.log(GOOGLE_PLAY_GAME + '.' + action + ': executed successfully');
+                // console.log(GOOGLE_PLAY_GAME + '.' + action + ': executed successfully');
             };
 
         var defaultFailureCallback = function () {
-                console.warn(GOOGLE_PLAY_GAME + '.' + action + ': failed on execution');
+                // console.warn(GOOGLE_PLAY_GAME + '.' + action + ': failed on execution');
             };
 
         if (typeof data === 'function') {

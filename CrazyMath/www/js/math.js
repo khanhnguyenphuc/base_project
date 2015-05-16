@@ -1,39 +1,47 @@
-var ET_NOT_CORRECT_ANSWER = 1;
-var ET_TOO_LATE = 2;
+const ET_NOT_CORRECT_ANSWER = 1;
+const ET_TOO_LATE = 2;
+const DF_SCORE = 0;
+const DF_OPERATION_LVL = 2;
+const MAX_OPERATION_LVL = 4;
+const DF_NUMRAND = 10;
+const DF_TIMING = 1000;
+const DF_REMAIN_TIME = 0;
 var realResult = 0, fakeResult = 0;
-var arrOperator = ['+', '-', 'x', '÷'];
-var arrAchivement = ['CgkI-43u0ukaEAIQAQ','CgkI-43u0ukaEAIQAg', 'CgkI-43u0ukaEAIQBQ', 'CgkI-43u0ukaEAIQBg', 'CgkI-43u0ukaEAIQBw'];
-var leaderboardId = 'CgkI-43u0ukaEAIQAw';
+var arrOperation = ['+', '-', 'x', '÷'];
 var arrBackgroundClr = ['lightblue', 'lightcoral', 'lightgray', 'lightgreen', 'lightgrey', 'lightsalmon', 'lightseagreen', 'lightskyblue', 'lightslategray', 'lightslategrey', 'lightsteelblue'];
-var score = 0;
-var timeout = null, timing = 1000, timingDefault = 1000;
-var numberRand1 = 10, numberRand2 = 10, operatorLvl = 4;
-var startTime, remainTime = 0;
+var score = DF_SCORE;
+var timeout = null, timing = DF_TIMING;
+var numberRand1 = numberRand2 = DF_NUMRAND, operationLvl = DF_OPERATION_LVL;
+var startTime, remainTime = DF_REMAIN_TIME;
 var lstMedia = {};
 var self;
 var mymath = {
     // Application Constructor
+    countPlaying: 0,
+    isEndGame: false,
     initialize: function() {
         self = this;
+        self.isEndGame = false;
         var d = new Date();
         startTime = d.getTime();
-
-        if (score != 0 && score % 20 == 0) {
+        if (score != 0 && score % 10 == 0) {
             numberRand1 += 5;
             numberRand2 += 5;
+            if (operationLvl < MAX_OPERATION_LVL)
+                    operationLvl += 1;
         }
         //random number1
         var number1 = Math.floor((Math.random() * numberRand1));
         //random number2
         var number2 = Math.floor((Math.random() * numberRand2));
         //random operator1
-        var operator = Math.floor((Math.random() * operatorLvl));
+        var operation = Math.floor((Math.random() * operationLvl));
         //get result
-        self.calculator(number1, number2, operator);
+        self.calculator(number1, number2, operation);
     },
-    calculator: function(num1, num2, operator) {
+    calculator: function(num1, num2, operation) {
         var result = 0;
-        switch(operator) {
+        switch(operation) {
             case 0:
                 result = num1 + num2;
                 break;
@@ -56,7 +64,7 @@ var mymath = {
         $('.number1').text(num1);
         $('.number2').text(num2);
         $('.number3').text(result);
-        $('.operator1').html(arrOperator[operator]);
+        $('.operator1').html(arrOperation[operation]);
     },
     randomResult: function(result) {
         var number = Math.floor((Math.random() * 2) + 1);
@@ -84,7 +92,7 @@ var mymath = {
         }
     },
     timingGame: function() {
-        timing = timingDefault + remainTime;
+        timing = DF_TIMING + remainTime;
         timeout = setTimeout(function() {
             self.endGame(ET_TOO_LATE);
         }, timing);
@@ -129,6 +137,7 @@ var mymath = {
         setTimeout(function() {
             $('.result-game').fadeIn('slow', 'swing');
             $('.score-title').circleType({radius: 400});
+            self.isEndGame = true;
         }, 500);
         
         $('#crazy-progress-bar').html('');
@@ -138,12 +147,13 @@ var mymath = {
         } else if (type == ET_NOT_CORRECT_ANSWER) {
             $('.score-feedback').text('Answer is incorrect!');
         }
-        //reset
+        //reset to default value
         clearTimeout(timeout);
-        score = 0;
-        numberRand1 = numberRand2 = 10;
-        timing = 1000;
-        timingDefault = 1000;
+        score = DF_SCORE;
+        operationLvl = DF_OPERATION_LVL;
+        numberRand1 = numberRand2 = DF_NUMRAND;
+        timing = DF_TIMING;
+        remainTime = DF_REMAIN_TIME;
     },
     showProgress: function() {
         $('#crazy-progress-bar').html('');
@@ -161,7 +171,7 @@ var mymath = {
         if (!lstMedia[type]) {
             lstMedia[type] = new Media(mp3URL);
         }
-        lstMedia[type].play();
+        lstMedia[type].play(lstMedia[type].stop());
     }
 };
 
@@ -169,55 +179,6 @@ function getURL(s) {
     if(cordova.platformId.toLowerCase() === "android") return "/android_asset/www/" + s;
     return s;
 }
-
-var successfullyLoggedIn = function (cb) {
-    //successfullyLoggedIn
-    if (cb) cb();
-};
-var failedLoggedIn = function() {
-    // if (AdMob) AdMob.removeBanner();
-};
-
-var doLoginGPlus = function(cb) {
-    googleplaygame.auth(function() {
-        successfullyLoggedIn(cb);
-    }, failedLoggedIn);
-};
-var submitScore = function() {
-    var doSubmit = function() {
-        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
-        var data = {
-            score: highScore,
-            leaderboardId: leaderboardId
-        };
-        googleplaygame.submitScore(data);
-    };
-    doLoginGPlus(doSubmit);
-};
-var submitAchivement = function() {
-    var doSubmit = function() {
-        var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
-        var num = Math.floor(highScore / 20);
-        var data = {};
-        if (highScore >=10) {
-            data = {
-                achievementId: arrAchivement[0],
-                numSteps: highScore
-            };
-            googleplaygame.incrementAchievement(data);
-        }
-        if (num > 0) {
-            for (var i = 0; i < num; i++) {
-                data = {
-                    achievementId: arrAchivement[i+1],
-                    numSteps: highScore
-                };
-                googleplaygame.incrementAchievement(data);
-            }
-        }
-    };
-    doLoginGPlus(doSubmit); 
-};
 
 var loadBackground = function() {
     var index = Math.floor((Math.random() * arrBackgroundClr.length));

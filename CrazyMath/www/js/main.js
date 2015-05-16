@@ -26,18 +26,32 @@ var initApp = function() {
 
     $('.title').circleType({radius: 400});
     createBanner();
-    // createInterstitial();
+    createInterstitial();
+    showInterstitial();
 };
+var showInterstitial = function() {
+    setInterval(function() {
+        if (mymath.isEndGame && (mymath.countPlaying % 7 == 0)){
+            AdMob.showInterstitial();
+            mymath.countPlaying += 1;
+        }
+
+    }, 100);
+}
 $(function () {
     
     $('.start-game').click(function(e) {
+        mymath.countPlaying += 1;
         mymath.initialize();
+
         $('.home').hide();
         $('.my-math').show();
         $('.my-math .answer').show();
         $('.result-game').hide();
         $('.my-math .score').text(0);
         loadBackground();
+
+        createInterstitial();
         // if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
     });
     $('.back-menu').click(function(e) {
