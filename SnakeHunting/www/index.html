@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+  <head>
+  <title></title>
+  <script src="cordova.js"></script>
+  <script src="libs/jquery/jquery.min.js"></script>
+  <script src="js/Queue.js"></script>
+    <script src="js/bfs.js"></script>
+  <script src="js/game.js"></script>
+    <script src="js/snake.js"></script>
+  <script src="js/menuitems.js"></script>
+  <script src="js/screens.js"></script>
+    
+    <script type='text/javascript'>
+    
+    window.onload = function(){ 
+        var canvas = document.getElementById('canvas');
+    canvas.width = WIDTH;
+    canvas.height = HEIGHT;
+    // canvas.width = $(window).width();
+    // canvas.height = $(window).height();
+      var screens = new Screen(canvas, '', 'green', 'Snake!', 'Yellow');
+      var mnitem = new MenuItem({
+        text: 'Play',
+        left: canvas.width/2 - 50,
+        top: canvas.height/2 - 50,
+        onclick: function() {
+          // var _context = canvas.getContext("2d");
+          // _context.clearRect(0,0,canvas.width,canvas.height);
+          screens.stop();
+          screens.clear();
+          var game = new Game("canvas");
+          game.init();
+        }
+      });
+      screens.addItem(mnitem);
+      mnitem = new MenuItem({
+        text: 'Options',
+        left: canvas.width/2 - 50,
+        top: canvas.height/2
+      });
+      screens.addItem(mnitem);
+      screens.start();
+    };  
+
+    </script>
+  </head>
+
+  <body>    
+    <canvas id="canvas" tabindex="0" style="margin:0px; border: 1px solid"> </canvas>   
+  </body>
+</html>
+
