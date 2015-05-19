@@ -31,35 +31,74 @@
     
     <script type='text/javascript'>
     
-    window.onload = function(){ 
-        var canvas = document.getElementById('canvas');
-    canvas.width = WIDTH;
-    canvas.height = HEIGHT;
-    // canvas.width = $(window).width();
-    // canvas.height = $(window).height();
-      var screens = new Screen(canvas, '', 'green', 'Snake!', 'Yellow');
-      var mnitem = new MenuItem({
-        text: 'Play',
-        left: canvas.width/2 - 50,
-        top: canvas.height/2 - 50,
-        onclick: function() {
-          // var _context = canvas.getContext("2d");
-          // _context.clearRect(0,0,canvas.width,canvas.height);
-          screens.stop();
-          screens.clear();
-          var game = new Game("canvas");
-          game.init();
+    window.onload = function()
+    {
+        var width = $(window).width() - 20;
+        var height = $(window).height() - 20;
+ 
+        var canvas = document.getElementById("canvas");
+        canvas.width = width;
+        canvas.height = height;
+        new Game('canvas').init();
+        // create the help screen
+        var helpScreen,welcomeScreen, playScreen;
+        helpScreen = new Screen(canvas);
+        helpScreen.afterDraw = function(context){
+            context.fillStyle = "white";
+            context.fillText("HELP",200,30);
+        };
+        playScreen = new Screen(canvas);
+        playScreen.afterDraw = function(_context) {
+          // _context.fillStyle = "white";
+          // _context.textAlign = "center";
+          // _context.font = "36px Arial";
+          // _context.fillText("Canvas Snake",WIDTH/2,HEIGHT/3);
+          // _context.font = "16px Arial";
+          // _context.fillText("Please touch to Start",WIDTH/2,HEIGHT/2);
         }
-      });
-      screens.addItem(mnitem);
-      mnitem = new MenuItem({
-        text: 'Options',
-        left: canvas.width/2 - 50,
-        top: canvas.height/2
-      });
-      screens.addItem(mnitem);
-      screens.start();
-    };  
+        helpScreen.addItem(new MenuItem({
+                left: 100,
+                top: 180,
+                width: 200,
+                height: 40,
+                text: "Back",
+                onclick: function(){
+                    // back to welcome screen
+                    helpScreen.stop();
+                    welcomeScreen.start();
+                }
+            }));
+ 
+        // create the welcome screen
+        welcomeScreen = new Screen(canvas);
+        var titles = ["Play","Help","Visit My Blogs"];
+ 
+        for(var i=0;i<titles.length;i++){
+            welcomeScreen.addItem(new MenuItem({
+                left: 100,
+                top: 100+50*i,
+                width: 200,
+                height: 40,
+                text: titles[i]
+            }));
+        }
+        welcomeScreen.items[0].onclick = function(){
+            new Game('canvas').init();
+            welcomeScreen.stop();
+        };
+        welcomeScreen.items[1].onclick = function(){
+            helpScreen.start();
+            welcomeScreen.stop();
+        };
+        welcomeScreen.items[2].onclick = function(){
+            window.open('https://yinyangit.wordpress.com', '_blank');
+        };
+        // welcomeScreen.start();
+    }
+    function clear(canvas) {
+        var context = canvas.getContext('2d');
+        context.clearRect(0, 0, canvas.width, canvas.height);
+    };
 
     </script>
   </head>

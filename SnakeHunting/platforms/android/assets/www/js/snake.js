@@ -8,12 +8,14 @@ function Snake(mapCols,mapRows,color,autoMoving){
     this.data; // snake's body
     this.path;
 	this.stepIndex;
+    this.speedX = 2;
+    this.speedY = 2;
 	this.getHead = function(){
 		return this.data[0];
 	};
     // PROTOTYPES
     this.init = function(){
-        var x = autoMoving ? mapCols-4: 3;
+        var x = autoMoving ? mapCols-4 : 3;
         var y = 0;
         this.data = [
             {x: x, y: y},
@@ -100,6 +102,16 @@ function Snake(mapCols,mapRows,color,autoMoving){
             case DOWN:
                 y++; break;            
         }
+        // switch(this.direction) {
+        //     case LEFT: 
+        //         x-=this.speedX; break;
+        //     case UP:
+        //         y-=this.speedY; break;
+        //     case RIGHT:
+        //         x+=this.speedX; break;
+        //     case DOWN:
+        //         y+=this.speedY; break;            
+        // }
         
         // eat food: return 1
         if(x == food.x && y == food.y)
@@ -108,8 +120,7 @@ function Snake(mapCols,mapRows,color,autoMoving){
             return 1;
         }
         // collide: return 2
-		
-        if(wall[x][y]==1 || this.collide(x,y))
+        if(!wall[x] || wall[x][y]==1 || this.collide(x,y))
             return 2;        
         // snake move by
         // adding the head
