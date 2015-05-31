@@ -1,7 +1,7 @@
 // var CELL_SIZE = 10;
 var FPS_SCREEN = 10    ;
-// var WIDTH = 400;
-// var HEIGHT = 400;
+// var WIDTH = $(window).width() - 20;
+// var HEIGHT = $(window).height() - 20;
  
 function Screen(canvas){
     var screen_timer;
@@ -19,8 +19,17 @@ function Screen(canvas){
     };
     this.draw = function(){
  
-        context.fillStyle = "black";
+        context.font = 'snakeElec';
+        context.fillStyle = "green";
         context.fillRect(0,0,width,height);
+        // var img = new Image();
+        //     img.src="img/green.png";
+        //     img.onload = function(){
+        //         // create pattern
+        //         var ptrn = context.createPattern(img, 'repeat'); // Create a pattern with this image, and set it to "repeat".
+        //         context.fillStyle = ptrn;
+        //         context.fillRect(0, 0, canvas.width, canvas.height); // context.fillRect(x, y, width, height);
+        //     }
         for(var i=0;i<this.items.length;i++){
             this.items[i].draw(context);
         }
@@ -62,9 +71,6 @@ function Screen(canvas){
         if(screen_timer)
             clearInterval(screen_timer);
         screen_timer = null;
-        for(var i=0;i<this.items.length;i++){
-            this.items[i].clear(context);
-        }
     };
     this.addItem = function(item){
         this.items.push(item);

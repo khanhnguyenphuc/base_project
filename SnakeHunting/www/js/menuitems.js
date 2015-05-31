@@ -29,7 +29,4 @@ function MenuItem(data){
     this.contain = function(x,y){
         return !(x<this.left || x>this.right || y<this.top || y>this.bottom);
     };
-    this.clear = function(context) {
-        context.clearRect(this.left, this.top, this.width, this.height);
-    };
 }

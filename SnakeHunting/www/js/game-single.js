@@ -1,19 +1,17 @@
 /******************** GAME ***********************/
 var CELL_SIZE = 20;
-var FPS = 1;
+var FPS = 2;
 var WIDTH = $(window).width() - 20;
 var HEIGHT = $(window).height() - 20;
 var MAX_PLAYER_LENGTH = 7;
-var MAX_COM_LENGTH = 12;
 
-function Game(canvas_id){    
+function GameSingle(canvas_id){    
 	var _level = 1;
 	var _scores = 0; 
     var _pressedKey;
     var _cols = Math.floor(WIDTH/CELL_SIZE);
     var _rows = Math.floor(HEIGHT/CELL_SIZE);
     var _playerSnake = new Snake(_cols,_rows,"red",false);
-	var _comSnake = new Snake(_cols,_rows,"blue",true);
     var _walls = [];
     var _canvas = document.getElementById(canvas_id);
     var _context = _canvas.getContext('2d');
@@ -24,13 +22,25 @@ function Game(canvas_id){
     var _running = false;    
     var _game_timer;
 	var _bfs;
+	var self = this;
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         return {
-          x: evt.clientX - rect.left,
-          y: evt.clientY - rect.top
+          x: evt.targetTouches[0].pageX - rect.left,
+          y: evt.targetTouches[0].pageY - rect.top
         };
     }
+    var handleStart = function(e) {
+    	e.preventDefault();
+    	if (gameOptions.state != 'playing')
+    		return;
+    	if (!_running) {
+    		startGame();
+    	} else {
+    		var p = getMousePos(_canvas, e);
+        	_playerSnake.handleTouch(p.x/CELL_SIZE,p.y/CELL_SIZE);
+    	}
+    };
     
     this.init = function() {                
         _canvas.width = WIDTH;
@@ -48,15 +58,7 @@ function Game(canvas_id){
         //         _pressedKey = e.keyCode;
         //     }
         // };
-        _canvas.onmousedown = function(e) {
-        	e.preventDefault();
-        	if (!_running) {
-        		startGame();
-        	} else {
-        		var p = getMousePos(_canvas, e);
-	        	_playerSnake.handleTouch(p.x/CELL_SIZE,p.y/CELL_SIZE);
-        	}
-        };      
+         _canvas.addEventListener("touchstart", handleStart, false);
 	
         // draw the welcome screen
         _context.textAlign = "center";
@@ -66,6 +68,13 @@ function Game(canvas_id){
         _context.fillText("Please touch to Start",WIDTH/2,HEIGHT/2);
     }
 	
+    this.pauseGame = function() {
+    	clearInterval(_game_timer);
+    	_game_timer = null;
+    };
+    this.playGame = function() {
+    	_game_timer = setInterval(update,1000/_fps);
+    };
     function createMap(){
 		for(var i=0;i<_cols;i+=2)
 		{
@@ -74,7 +83,7 @@ function Game(canvas_id){
 			_walls[i+1] = [];
 			for(var j=0;j<_rows;j+=2)
 			{	
-				var val = (j>4 && Math.floor(Math.random()*20)<2)?1:0;
+				var val = (j>4 && Math.floor(Math.random()*CELL_SIZE)<2)?1:0;
 				
 				_walls[i][j] = val;
 				_walls[i+1][j] = val;
@@ -86,9 +95,8 @@ function Game(canvas_id){
     function startGame() {
         _pressedKey = null;
         clearInterval(_game_timer);
-		_fps = FPS+_level*2; 
+		_fps = FPS+_level*2;
         _playerSnake.init();
-		_comSnake.init();
 		createMap();
 		
 		// this object is used to find the path between two points
@@ -96,13 +104,9 @@ function Game(canvas_id){
         
 		createFood();
         _running = true;
-        console.log(_fps);
         _game_timer = setInterval(update,1000/_fps);
-		
-       
-		
     }
-    function endGame(){
+    this.endGame = function () {
 		_running = false;    
 		_context.save();
 		_context.fillStyle = "rgba(0,0,0,0.2)";
@@ -132,15 +136,15 @@ function Game(canvas_id){
 				if(_scores<0)
 					_scores = 0;
 			}	
-			endGame();                                 
+			self.endGame();                                 
 			return;
 		}else{		
-			if(!_comSnake.path)
-				_comSnake.setPath(_bfs.findPath(_comSnake.data,_comSnake.getHead(),_food),_food);
+			// if(!_comSnake.path)
+			// 	_comSnake.setPath(_bfs.findPath(_comSnake.data,_comSnake.getHead(),_food),_food);
 			
-			ret = _comSnake.update(_walls,_food);
-			if(ret==1) // com player eated the food
-				createFood();
+			// ret = _comSnake.update(_walls,_food);
+			// if(ret==1) // com player eated the food
+			// 	createFood();
 		}
 		draw(); 
 		// Player's snake reached the maximum length
@@ -158,11 +162,12 @@ function Game(canvas_id){
 			_context.fillStyle = "red";
 			_context.textAlign = "center";
 			_context.fillText("Please Touch to start the next level",WIDTH/2,HEIGHT/2);                                 
-		}else if(_comSnake.data.length==MAX_COM_LENGTH)
-		{
-			endGame();  
-			return;
 		}
+		// else if(_comSnake.data.length==MAX_COM_LENGTH)
+		// {
+		// 	endGame();  
+		// 	return;
+		// }
 		   
 	}
     function draw(){
@@ -173,7 +178,7 @@ function Game(canvas_id){
 		_context.lineCap = "round";
 		_context.lineJoin = "round";
         _playerSnake.draw(_context);
-		_comSnake.draw(_context);
+		// _comSnake.draw(_context);
         // draw food
 		_context.fillStyle = "green";
         _context.beginPath();
@@ -199,11 +204,11 @@ function Game(canvas_id){
 		var y;
 		do {                
 			y = Math.floor(Math.random()*_rows);
-		} while(_walls[x][y] || _comSnake.contain(x, y) || _playerSnake.contain(x, y));
+		} while(_walls[x][y] || _playerSnake.contain(x, y));
 		
 		_food = {x: x, y: y};
 		// find new path for the com player
-		_comSnake.setPath(_bfs.findPath(_comSnake.data,_comSnake.getHead(),_food));
+		// _comSnake.setPath(_bfs.findPath(_comSnake.data,_comSnake.getHead(),_food));
 	}
 
 };

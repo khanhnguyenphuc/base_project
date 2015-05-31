@@ -1,12 +1,12 @@
 /******************** GAME ***********************/
 var CELL_SIZE = 20;
-var FPS = 1;
+var FPS = 2;
 var WIDTH = $(window).width() - 20;
 var HEIGHT = $(window).height() - 20;
 var MAX_PLAYER_LENGTH = 7;
 var MAX_COM_LENGTH = 12;
 
-function Game(canvas_id){    
+function GameAI(canvas_id){    
 	var _level = 1;
 	var _scores = 0; 
     var _pressedKey;
@@ -24,39 +24,44 @@ function Game(canvas_id){
     var _running = false;    
     var _game_timer;
 	var _bfs;
+	var self = this;
     function getMousePos(canvas, evt) {
         var rect = canvas.getBoundingClientRect();
         return {
-          x: evt.clientX - rect.left,
-          y: evt.clientY - rect.top
+          x: evt.targetTouches[0].pageX - rect.left,
+          y: evt.targetTouches[0].pageY - rect.top
         };
     }
+    var handleStart = function(e) {
+    	e.preventDefault();
+    	if (gameOptions.state != 'playing')
+    		return;
+    	if (!_running) {
+    		startGame();
+    	} else {
+    		var p = getMousePos(_canvas, e);
+        	_playerSnake.handleTouch(p.x/CELL_SIZE,p.y/CELL_SIZE);
+    	}
+    };
     
     this.init = function() {                
         _canvas.width = WIDTH;
         _canvas.height = HEIGHT;
                 
-        // _canvas.onkeydown = function(e) {
-        //     e.preventDefault();
-        //     if(e.keyCode == 13) // Enter key
-        //     {                
-        //         if(!_running)
-        //             startGame();                        
-        //     }
-        //     else if(_running)
-        //     {                    
-        //         _pressedKey = e.keyCode;
-        //     }
-        // };
-        _canvas.onmousedown = function(e) {
-        	e.preventDefault();
-        	if (!_running) {
-        		startGame();
-        	} else {
-        		var p = getMousePos(_canvas, e);
-	        	_playerSnake.handleTouch(p.x/CELL_SIZE,p.y/CELL_SIZE);
-        	}
-        };      
+        _canvas.onkeydown = function(e) {
+            e.preventDefault();
+            if(e.keyCode == 13) // Enter key
+            {                
+                if(!_running)
+                    startGame();                        
+            }
+            else if(_running)
+            {                    
+                _pressedKey = e.keyCode;
+            }
+        };
+        _canvas.addEventListener("touchstart", handleStart, false);
+        
 	
         // draw the welcome screen
         _context.textAlign = "center";
@@ -64,8 +69,14 @@ function Game(canvas_id){
         _context.fillText("Canvas Snake",WIDTH/2,HEIGHT/3);
         _context.font = "16px Arial";
         _context.fillText("Please touch to Start",WIDTH/2,HEIGHT/2);
-    }
-	
+    };
+    this.pauseGame = function() {
+    	clearInterval(_game_timer);
+    	_game_timer = null;
+    };
+    this.playGame = function() {
+    	_game_timer = setInterval(update,1000/_fps);
+    };
     function createMap(){
 		for(var i=0;i<_cols;i+=2)
 		{
@@ -98,11 +109,8 @@ function Game(canvas_id){
         _running = true;
         console.log(_fps);
         _game_timer = setInterval(update,1000/_fps);
-		
-       
-		
     }
-    function endGame(){
+    this.endGame = function(){
 		_running = false;    
 		_context.save();
 		_context.fillStyle = "rgba(0,0,0,0.2)";
@@ -132,7 +140,7 @@ function Game(canvas_id){
 				if(_scores<0)
 					_scores = 0;
 			}	
-			endGame();                                 
+			self.endGame();                                 
 			return;
 		}else{		
 			if(!_comSnake.path)
@@ -160,7 +168,7 @@ function Game(canvas_id){
 			_context.fillText("Please Touch to start the next level",WIDTH/2,HEIGHT/2);                                 
 		}else if(_comSnake.data.length==MAX_COM_LENGTH)
 		{
-			endGame();  
+			self.endGame();  
 			return;
 		}
 		   

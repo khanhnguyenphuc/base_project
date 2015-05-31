@@ -22,83 +22,22 @@
   <title></title>
   <script src="cordova.js"></script>
   <script src="libs/jquery/jquery.min.js"></script>
+  <script src="js/game-options.js"></script>
   <script src="js/Queue.js"></script>
     <script src="js/bfs.js"></script>
-  <script src="js/game.js"></script>
+  <script src="js/game-AI.js"></script>
+  <script src="js/game-single.js"></script>
     <script src="js/snake.js"></script>
   <script src="js/menuitems.js"></script>
   <script src="js/screens.js"></script>
-    
+  <script src="js/drawscreen.js"></script>
+    <style type="text/css" scr="css/snake.css"></style>
     <script type='text/javascript'>
-    
     window.onload = function()
     {
-        var width = $(window).width() - 20;
-        var height = $(window).height() - 20;
- 
-        var canvas = document.getElementById("canvas");
-        canvas.width = width;
-        canvas.height = height;
-        new Game('canvas').init();
-        // create the help screen
-        var helpScreen,welcomeScreen, playScreen;
-        helpScreen = new Screen(canvas);
-        helpScreen.afterDraw = function(context){
-            context.fillStyle = "white";
-            context.fillText("HELP",200,30);
-        };
-        playScreen = new Screen(canvas);
-        playScreen.afterDraw = function(_context) {
-          // _context.fillStyle = "white";
-          // _context.textAlign = "center";
-          // _context.font = "36px Arial";
-          // _context.fillText("Canvas Snake",WIDTH/2,HEIGHT/3);
-          // _context.font = "16px Arial";
-          // _context.fillText("Please touch to Start",WIDTH/2,HEIGHT/2);
-        }
-        helpScreen.addItem(new MenuItem({
-                left: 100,
-                top: 180,
-                width: 200,
-                height: 40,
-                text: "Back",
-                onclick: function(){
-                    // back to welcome screen
-                    helpScreen.stop();
-                    welcomeScreen.start();
-                }
-            }));
- 
-        // create the welcome screen
-        welcomeScreen = new Screen(canvas);
-        var titles = ["Play","Help","Visit My Blogs"];
- 
-        for(var i=0;i<titles.length;i++){
-            welcomeScreen.addItem(new MenuItem({
-                left: 100,
-                top: 100+50*i,
-                width: 200,
-                height: 40,
-                text: titles[i]
-            }));
-        }
-        welcomeScreen.items[0].onclick = function(){
-            new Game('canvas').init();
-            welcomeScreen.stop();
-        };
-        welcomeScreen.items[1].onclick = function(){
-            helpScreen.start();
-            welcomeScreen.stop();
-        };
-        welcomeScreen.items[2].onclick = function(){
-            window.open('https://yinyangit.wordpress.com', '_blank');
-        };
-        // welcomeScreen.start();
+        drawScreen();
+        document.addEventListener('backbutton', onBackKeyDown, false);
     }
-    function clear(canvas) {
-        var context = canvas.getContext('2d');
-        context.clearRect(0, 0, canvas.width, canvas.height);
-    };
 
     </script>
   </head>
