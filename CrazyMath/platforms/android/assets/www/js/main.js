@@ -5,9 +5,22 @@ function onLoad() {
     } else {
         initApp();
     }
-    
+    document.addEventListener('backbutton', onBackKeyDown, false);
 }
-    
+/*Function onBackKeyDown*/
+function onBackKeyDown(event) {
+    // Handle the back button
+    event.preventDefault();
+    if (mymath.gameState == 'playing') {
+        $('.home').show();
+        $('.result-game').hide();
+        $('.my-math').hide();
+        $('.title').circleType({radius: 400});
+    } else if (mymath.gameState == 'home'){ //home
+        //show dialog confirm exit app
+        navigator.app.exitApp();
+    }
+}
 var initApp = function() {
     doLoginGPlus();
     initAd();
@@ -31,7 +44,7 @@ var initApp = function() {
 };
 var showInterstitial = function() {
     setInterval(function() {
-        if (mymath.isEndGame && (mymath.countPlaying % 7 == 0)){
+        if (mymath.isEndGame && (mymath.countPlaying % 5 == 0)){
             AdMob.showInterstitial();
             mymath.countPlaying += 1;
         }
@@ -43,7 +56,7 @@ $(function () {
     $('.start-game').click(function(e) {
         mymath.countPlaying += 1;
         mymath.initialize();
-
+        mymath.gameState = 'playing';
         $('.home').hide();
         $('.my-math').show();
         $('.my-math .answer').show();
@@ -58,14 +71,15 @@ $(function () {
         $('.home').show();
         $('.result-game').hide();
         $('.my-math').hide();
+        mymath.gameState = 'home';
         $('.title').circleType({radius: 400});
     })
-    $('.accept').click(function(e) {
+    $('.accept')[0].addEventListener("touchstart", function(e) {
         mymath.confirmCalculator(true)
-    });
-    $('.deny').click(function(e) {
+    }, false);
+    $('.deny')[0].addEventListener("touchstart", function(e) {
         mymath.confirmCalculator(false)
-    });
+    }, false);
     $('.leaderboard-game').click(function(e) {
         googleplaygame.showLeaderboard({
             leaderboardId: leaderboardId

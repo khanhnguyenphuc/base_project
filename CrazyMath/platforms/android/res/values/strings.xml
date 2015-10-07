@@ -4,4 +4,5 @@
     <string name="launcher_name">@string/app_name</string>
     <string name="activity_name">@string/launcher_name</string>
     <string name="app_id">921712690939</string>
+    <string name="az_appkey">0d0dbb7980c4f9cb00ff00bfc8e9772e</string>
 </resources>

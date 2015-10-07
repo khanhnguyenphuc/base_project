@@ -18,7 +18,8 @@ var self;
 var mymath = {
     // Application Constructor
     countPlaying: 0,
-    isEndGame: false,
+    isEndGame: true,
+    gameState: 'home',
     initialize: function() {
         self = this;
         self.isEndGame = false;

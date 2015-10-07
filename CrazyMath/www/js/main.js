@@ -7,7 +7,6 @@ function onLoad() {
     }
     
 }
-    
 var initApp = function() {
     doLoginGPlus();
     initAd();
@@ -31,7 +30,7 @@ var initApp = function() {
 };
 var showInterstitial = function() {
     setInterval(function() {
-        if (mymath.isEndGame && (mymath.countPlaying % 7 == 0)){
+        if (mymath.isEndGame && (mymath.countPlaying % 5 == 0)){
             AdMob.showInterstitial();
             mymath.countPlaying += 1;
         }
@@ -60,12 +59,12 @@ $(function () {
         $('.my-math').hide();
         $('.title').circleType({radius: 400});
     })
-    $('.accept').click(function(e) {
+    $('.accept')[0].addEventListener("touchstart", function(e) {
         mymath.confirmCalculator(true)
-    });
-    $('.deny').click(function(e) {
+    }, false);
+    $('.deny')[0].addEventListener("touchstart", function(e) {
         mymath.confirmCalculator(false)
-    });
+    }, false);
     $('.leaderboard-game').click(function(e) {
         googleplaygame.showLeaderboard({
             leaderboardId: leaderboardId

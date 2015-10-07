@@ -6,11 +6,11 @@ function sharePhoto(cb) {
         }else{
             //For android
             imageLink = res.filePath;
-            window.plugins.socialsharing.share('Message, subject, image and link', 'The subject','file://'+imageLink, 'http://www.x-services.nl');
+            window.plugins.socialsharing.share('Message, subject, image and link', 'The subject','file://'+imageLink, 'https://play.google.com/store/apps/details?id=puka.crazymath');
             
            //For iOS
            //window.plugins.socialsharing.share(null,   null,imageLink, null)
         }
         if (cb) cb();
-     },'jpg',50,'CrazyMath-ScreenShot' + (new Date()).getTime());
+     },'jpg',50,'Puka-CrazyMath-ScreenShot' + (new Date()).getTime());
 }
