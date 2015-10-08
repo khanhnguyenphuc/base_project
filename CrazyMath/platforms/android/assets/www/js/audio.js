@@ -1,10 +1,13 @@
-function playAudio(src) {
-    src = '/android_asset/www/' + src;
-    var media = new Media(src, success, errorThrown);
-    media.play();
+var lstMedia = {};
+function playSound(type, src) {
+    // Media player
+    var mp3URL = getURL(src);
+    if (!lstMedia[type]) {
+        lstMedia[type] = new Media(mp3URL);
+    }
+    lstMedia[type].play(lstMedia[type].stop());
 }
-
-function success() {}
-function errorThrown(e) {
-    alert('Error while playing the sound!');
+function getURL(s) {
+    if(cordova.platformId.toLowerCase() === "android") return "/android_asset/www/" + s;
+    return s;
 }

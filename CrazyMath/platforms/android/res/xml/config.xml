@@ -24,6 +24,12 @@
     <feature name="InAppBrowser">
         <param name="android-package" value="org.apache.cordova.inappbrowser.InAppBrowser" />
     </feature>
+    <feature name="Device">
+        <param name="android-package" value="org.apache.cordova.device.Device" />
+    </feature>
+    <feature name="AdBuddizBridge">
+        <param name="android-package" value="com.purplebrain.adbuddiz.sdk.AdBuddizBridge" />
+    </feature>
     <name>Crazy Math</name>
     <description>
         A sample Apache Cordova application that responds to the deviceready event.

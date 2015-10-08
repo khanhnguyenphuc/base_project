@@ -50,6 +50,17 @@ module.exports = [
         ]
     },
     {
+        "file": "plugins/com.purplebrain.adbuddiz.sdk/www/adbuddizbridge.js",
+        "id": "com.purplebrain.adbuddiz.sdk.AdBuddizBridge"
+    },
+    {
+        "file": "plugins/com.purplebrain.adbuddiz.sdk/www/adbuddiz.js",
+        "id": "com.purplebrain.adbuddiz.sdk.AdBuddiz",
+        "clobbers": [
+            "adbuddiz"
+        ]
+    },
+    {
         "file": "plugins/org.apache.cordova.file/www/DirectoryEntry.js",
         "id": "org.apache.cordova.file.DirectoryEntry",
         "clobbers": [
@@ -194,6 +205,13 @@ module.exports = [
             "cordova"
         ],
         "runs": true
+    },
+    {
+        "file": "plugins/org.apache.cordova.device/www/device.js",
+        "id": "org.apache.cordova.device.device",
+        "clobbers": [
+            "device"
+        ]
     }
 ];
 module.exports.metadata = 
@@ -205,10 +223,12 @@ module.exports.metadata =
     "com.google.cordova.admob": "2.7.5",
     "org.apache.cordova.media": "0.2.16",
     "org.apache.cordova.inappbrowser": "0.6.0",
+    "com.purplebrain.adbuddiz.sdk": "3.0.16",
     "com.google.playservices": "21.0.0",
     "android.support.v4": "21.0.1",
     "com.rjfun.cordova.extension": "1.0.6",
-    "org.apache.cordova.file": "1.3.3"
+    "org.apache.cordova.file": "1.3.3",
+    "org.apache.cordova.device": "0.3.0"
 }
 // BOTTOM OF METADATA
 });

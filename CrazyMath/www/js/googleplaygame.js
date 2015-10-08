@@ -27,19 +27,19 @@ var submitScore = function() {
 var submitAchivement = function() {
     var doSubmit = function() {
         var highScore = localStorage.getItem("CrazyMath-HighScore") ? localStorage.getItem("CrazyMath-HighScore") : 0;
-        var num = Math.floor(highScore / 20);
+        var lvl = Math.floor(highScore / 20);
         var data = {};
-        if (highScore >=10) {
+        if (highScore >= 10) { // achievement for new bie
             data = {
                 achievementId: arrAchivement[0],
                 numSteps: highScore
             };
             googleplaygame.incrementAchievement(data);
         }
-        if (num > 0) {
-            for (var i = 0; i < num; i++) {
+        if (lvl > 0) {
+            for (var i = 1; i <= lvl; i++) {
                 data = {
-                    achievementId: arrAchivement[i+1],
+                    achievementId: arrAchivement[i],
                     numSteps: highScore
                 };
                 googleplaygame.incrementAchievement(data);

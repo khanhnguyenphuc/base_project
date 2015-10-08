@@ -6,7 +6,7 @@ function sharePhoto(cb) {
         }else{
             //For android
             imageLink = res.filePath;
-            window.plugins.socialsharing.share('Message, subject, image and link', 'The subject','file://'+imageLink, 'https://play.google.com/store/apps/details?id=puka.crazymath');
+            window.plugins.socialsharing.share(null, 'The subject','file://'+imageLink, 'https://play.google.com/store/apps/details?id=puka.crazymath');
             
            //For iOS
            //window.plugins.socialsharing.share(null,   null,imageLink, null)

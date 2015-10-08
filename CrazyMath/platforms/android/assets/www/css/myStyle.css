@@ -70,7 +70,7 @@ body {
 	color: lightgreen;
 	margin-top: -10px;
 }
-#crazy-progress-bar {
+#progress-bar {
 	  position: absolute;
 	  top: 10px;
 	  height: 10px;
@@ -173,7 +173,7 @@ body {
 	  	height: 30px;
 	}
 
-	#crazy-progress-bar {
+	#progress-bar {
 		  position: absolute;
 		  top: 10px;
 		  height: 10px;

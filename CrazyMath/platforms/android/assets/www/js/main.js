@@ -5,25 +5,12 @@ function onLoad() {
     } else {
         initApp();
     }
-    document.addEventListener('backbutton', onBackKeyDown, false);
-}
-/*Function onBackKeyDown*/
-function onBackKeyDown(event) {
-    // Handle the back button
-    event.preventDefault();
-    if (mymath.gameState == 'playing') {
-        $('.home').show();
-        $('.result-game').hide();
-        $('.my-math').hide();
-        $('.title').circleType({radius: 400});
-    } else if (mymath.gameState == 'home'){ //home
-        //show dialog confirm exit app
-        navigator.app.exitApp();
-    }
+    
 }
 var initApp = function() {
+
     doLoginGPlus();
-    initAd();
+    initAds();
     loadBackground();
     //fix html for special device
     if (window.innerWidth < 250) {
@@ -38,40 +25,27 @@ var initApp = function() {
     }
 
     $('.title').circleType({radius: 400});
-    createBanner();
-    createInterstitial();
-    showInterstitial();
 };
-var showInterstitial = function() {
-    setInterval(function() {
-        if (mymath.isEndGame && (mymath.countPlaying % 5 == 0)){
-            AdMob.showInterstitial();
-            mymath.countPlaying += 1;
-        }
 
-    }, 100);
-}
 $(function () {
-    
+    var mymath = new MyMath();
+    var countPlaying = 0;
+    var elems = getElements();
     $('.start-game').click(function(e) {
-        mymath.countPlaying += 1;
+        countPlaying += 1;
         mymath.initialize();
-        mymath.gameState = 'playing';
+        mymath.playGame();
         $('.home').hide();
         $('.my-math').show();
         $('.my-math .answer').show();
         $('.result-game').hide();
         $('.my-math .score').text(0);
         loadBackground();
-
-        createInterstitial();
-        // if(AdMob) AdMob.prepareInterstitial( {adId:admobid.interstitial, autoShow:false} );
     });
     $('.back-menu').click(function(e) {
         $('.home').show();
         $('.result-game').hide();
         $('.my-math').hide();
-        mymath.gameState = 'home';
         $('.title').circleType({radius: 400});
     })
     $('.accept')[0].addEventListener("touchstart", function(e) {
@@ -89,12 +63,7 @@ $(function () {
         googleplaygame.showAchievements();
     });
     $('.share-game').click(function(e) {
-        AdMob.removeBanner(function() {
-            sharePhoto(function() {
-                createBanner();
-            });
-        });
-        
+        sharePhoto();
     });
 
     $('.rate-game').on('click', function(e) {
@@ -109,5 +78,10 @@ $(function () {
             // window.open('http://appworld.blackberry.com/webstore/content/<applicationid>');
         }
     });
-    
+    setInterval(function() {
+        if (mymath.gameover && countPlaying % 2 == 0) {
+            adbuddiz.showAd();
+            mymath.gameover = false;
+        }
+    }, 200);
 });
